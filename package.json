@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node build/index"
+    "start": "concurrently npm:start:*",
+    "start:build": "tsc -w",
+    "start:run": "nodemon build/server.js"
   },
   "keywords": [],
   "author": "",
