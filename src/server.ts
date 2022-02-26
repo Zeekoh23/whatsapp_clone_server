@@ -42,7 +42,7 @@ app.route("/check").get((req: Request, res: Response) => {
   return res.json("Your app is working fine");
 });
 
-const server = httpServer.listen(port, "0.0.0.0", () => {
+const server: any = httpServer.listen(port, "0.0.0.0", () => {
   console.log("app running on port 5000");
 });
 
