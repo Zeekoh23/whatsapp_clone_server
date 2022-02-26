@@ -6,6 +6,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const http_1 = __importDefault(require("http"));
 const cors_1 = __importDefault(require("cors"));
+process.on("uncaughtException", (err) => {
+    console.log("UNCAUGHT EXCEPTION! SHUTTING DOWN");
+    console.log(err.name, err.message);
+    process.exit(1);
+});
 const AppRouter_1 = require("./AppRouter");
 const app = (0, express_1.default)();
 var httpServer = http_1.default.createServer(app);
@@ -61,16 +66,16 @@ app.use(AppRouter_1.AppRouter.getInstance());
 app.route("/check").get((req, res) => {
     return res.json("Your app is working fine");
 });
-httpServer.listen(port, "0.0.0.0", () => {
+const server = httpServer.listen(port, "0.0.0.0", () => {
     console.log("app running on port 5000");
 });
-/*process.on("unhandledRejection", (err: any) => {
-  console.log(err.name, err.message);
-  console.log("UNHANDLED REJECTION! Shutting down...");
-  server.close(() => {
-    process.exit(1);
-  });
-});*/
+process.on("unhandledRejection", (err) => {
+    console.log(err.name, err.message);
+    console.log("UNHANDLED REJECTION! Shutting down...");
+    server.close(() => {
+        process.exit(1);
+    });
+});
 /*server.listen(4000, "0.0.0.0", () => {
   console.log("server started");
 });*/
