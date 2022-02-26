@@ -11,14 +11,14 @@ import express, { Request, Response } from "express";
   process.exit(1);
 });*/
 
-import mongoose from "mongoose";
+//import mongoose from "mongoose";
 
 import { app, httpServer } from "./";
 import { AppRouter } from "./AppRouter";
 
 const DB: any = process.env.DATABASE_LOCAL;
 
-mongoose
+/*mongoose
   .connect(DB, {
     useFindAndModify: false,
     useNewUrlParser: true,
@@ -28,7 +28,7 @@ mongoose
   .then(() => {
     console.log("DB Connected successfully");
   })
-  .catch((err) => console.log("error"));
+  .catch((err) => console.log("error"));*/
 
 app.use(AppRouter.getInstance());
 
