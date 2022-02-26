@@ -1,5 +1,5 @@
-import dotenv from "dotenv";
-dotenv.config({ path: "./config.env" });
+//import dotenv from "dotenv";
+//dotenv.config({ path: "./config.env" });
 
 import express, { Request, Response } from "express";
 
@@ -16,7 +16,7 @@ import express, { Request, Response } from "express";
 import { app, httpServer } from "./";
 import { AppRouter } from "./AppRouter";
 
-const DB: any = process.env.DATABASE_LOCAL;
+//const DB: any = process.env.DATABASE_LOCAL;
 
 /*mongoose
   .connect(DB, {
