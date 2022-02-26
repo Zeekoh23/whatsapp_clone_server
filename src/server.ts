@@ -1,13 +1,15 @@
 import dotenv from "dotenv";
 dotenv.config({ path: "./config.env" });
 
+import express, { Request, Response } from "express";
+
 //https://git.heroku.com/murmuring-wildwood-82188.git
 
-process.on("uncaughtException", (err) => {
+/*process.on("uncaughtException", (err) => {
   console.log("UNCAUGHT EXCEPTION! SHUTTING DOWN");
   console.log(err.name, err.message);
   process.exit(1);
-});
+});*/
 
 import mongoose from "mongoose";
 
@@ -33,6 +35,10 @@ app.use(AppRouter.getInstance());
 /*const server = app.listen(2000, () => {
   console.log("app running on port 2000");
 });*/
+
+app.route("/check").get((req: Request, res: Response) => {
+  return res.json("Your app is working fine");
+});
 
 const server = httpServer.listen(4000, "0.0.0.0", () => {
   console.log("app running on port 4000");

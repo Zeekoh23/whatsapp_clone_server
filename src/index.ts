@@ -42,10 +42,6 @@ io.on("connection", (socket: any) => {
   });
 });
 
-app.route("/check").get((req: Request, res: Response) => {
-  return res.json("Your app is working fine");
-});
-
 /*server.listen(4000, "0.0.0.0", () => {
   console.log("server started");
 });*/
