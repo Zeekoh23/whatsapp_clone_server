@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "concurrently npm:start:*",
+    "start:prod": "NODE_ENV=production nodemon build/index.js",
     "start:build": "tsc -w",
-    "start:run": "nodemon build/server.js"
+    "start:run": "nodemon build/index.js"
   },
   "keywords": [],
   "author": "",

@@ -3,19 +3,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.httpServer = exports.app = void 0;
 const express_1 = __importDefault(require("express"));
 const http_1 = __importDefault(require("http"));
 const cors_1 = __importDefault(require("cors"));
+const AppRouter_1 = require("./AppRouter");
 const app = (0, express_1.default)();
-exports.app = app;
 var httpServer = http_1.default.createServer(app);
-exports.httpServer = httpServer;
 var io = require("socket.io")(httpServer);
 //middleware
 app.use(express_1.default.json());
 var clients = {};
 app.use((0, cors_1.default)());
+const port = process.env.PORT || 5000;
 const connectedUser = new Set();
 io.on("connection", (socket) => {
     console.log("connected");
@@ -43,6 +42,36 @@ io.on("connection", (socket) => {
             clients[targetId].emit("message", msg);
     });
 });
+//const DB: any = process.env.DATABASE_LOCAL;
+/*mongoose
+  .connect(DB, {
+    useFindAndModify: false,
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log("DB Connected successfully");
+  })
+  .catch((err) => console.log("error"));*/
+app.use(AppRouter_1.AppRouter.getInstance());
+/*const server = app.listen(2000, () => {
+  console.log("app running on port 2000");
+});*/
 app.route("/check").get((req, res) => {
     return res.json("Your app is working fine");
 });
+httpServer.listen(port, "0.0.0.0", () => {
+    console.log("app running on port 5000");
+});
+/*process.on("unhandledRejection", (err: any) => {
+  console.log(err.name, err.message);
+  console.log("UNHANDLED REJECTION! Shutting down...");
+  server.close(() => {
+    process.exit(1);
+  });
+});*/
+/*server.listen(4000, "0.0.0.0", () => {
+  console.log("server started");
+});*/
+//export { app, httpServer };
