@@ -19,7 +19,7 @@ import { AppRouter } from "./AppRouter";
 const port: any = process.env.PORT || 5000;
 
 //const DB: any = process.env.DATABASE_LOCAL;
-
+DATABASE_LOCAL=mongodb://localhost:27017/whatsapp_server
 mongoose
   .connect(DB, {
     useFindAndModify: false,
