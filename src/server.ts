@@ -43,7 +43,7 @@ app.route("/check").get((req: Request, res: Response) => {
 });
 
 const server = httpServer.listen(port, "0.0.0.0", () => {
-  console.log("app running on port 4000");
+  console.log("app running on port 5000");
 });
 
 process.on("unhandledRejection", (err: any) => {
