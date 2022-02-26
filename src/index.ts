@@ -2,14 +2,6 @@ import express, { Request, Response } from "express";
 import http from "http";
 import cors from "cors";
 
-process.on("uncaughtException", (err) => {
-  console.log("UNCAUGHT EXCEPTION! SHUTTING DOWN");
-  console.log(err.name, err.message);
-  process.exit(1);
-});
-
-import { AppRouter } from "./AppRouter";
-
 const app = express();
 
 var httpServer = http.createServer(app);
@@ -19,8 +11,6 @@ var io = require("socket.io")(httpServer);
 app.use(express.json());
 var clients: any = {};
 app.use(cors());
-
-const port: any = process.env.PORT || 5000;
 
 const connectedUser = new Set();
 
@@ -66,30 +56,8 @@ io.on("connection", (socket: any) => {
   })
   .catch((err) => console.log("error"));*/
 
-app.use(AppRouter.getInstance());
-
-/*const server = app.listen(2000, () => {
-  console.log("app running on port 2000");
-});*/
-
-app.route("/check").get((req: Request, res: Response) => {
-  return res.json("Your app is working fine");
-});
-
-const server: any = httpServer.listen(port, "0.0.0.0", () => {
-  console.log("app running on port 5000");
-});
-
-process.on("unhandledRejection", (err: any) => {
-  console.log(err.name, err.message);
-  console.log("UNHANDLED REJECTION! Shutting down...");
-  server.close(() => {
-    process.exit(1);
-  });
-});
-
 /*server.listen(4000, "0.0.0.0", () => {
   console.log("server started");
 });*/
 
-//export { app, httpServer };
+export { app, httpServer };
