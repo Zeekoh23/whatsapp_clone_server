@@ -4,11 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "concurrently npm:start:*",
-    "start:prod": "NODE_ENV=production nodemon build/server.js",
-    "start:build": "tsc -w",
-    "start:run": "nodemon build/server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node build/server.js"
   },
   "keywords": [],
   "author": "",
