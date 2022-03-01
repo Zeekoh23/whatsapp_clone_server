@@ -12,6 +12,7 @@ exports.app = app;
 var httpServer = http_1.default.createServer(app);
 exports.httpServer = httpServer;
 var io = require("socket.io")(httpServer);
+const imageRoutes_1 = __importDefault(require("./routes/imageRoutes"));
 //middleware
 app.use(express_1.default.json());
 var clients = {};
@@ -43,3 +44,5 @@ io.on("connection", (socket) => {
             clients[targetId].emit("message", msg);
     });
 });
+app.use("/chats", imageRoutes_1.default);
+app.use('/uploads1', express_1.default.static('uploads'));

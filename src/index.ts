@@ -7,6 +7,8 @@ const app = express();
 var httpServer = http.createServer(app);
 var io = require("socket.io")(httpServer);
 
+import imagerouter from "./routes/imageRoutes";
+
 //middleware
 app.use(express.json());
 var clients: any = {};
@@ -41,6 +43,9 @@ io.on("connection", (socket: any) => {
     if (clients[targetId]) clients[targetId].emit("message", msg);
   });
 });
+
+app.use("/chats", imagerouter);
+app.use('/uploads1', express.static('uploads'));
 
 //const DB: any = process.env.DATABASE_LOCAL;
 
