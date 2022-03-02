@@ -32,6 +32,15 @@ io.on("connection", (socket: any) => {
     console.log(data);
     socket.broadcast.emit("message-receive", data);
   });*/
+  socket.on("typing", (type: any) => {
+    console.log(type);
+    io.emit("typing", type);
+  });
+  socket.on("location", (loc: any) => {
+    console.log(loc);
+    io.emit("message", loc);
+  });
+
   socket.on("signin", (id: any) => {
     console.log(id);
     clients[id] = socket;
@@ -45,7 +54,7 @@ io.on("connection", (socket: any) => {
 });
 
 app.use("/chats", imagerouter);
-app.use('/uploads1', express.static('uploads'));
+app.use("/uploads1", express.static("uploads"));
 
 //const DB: any = process.env.DATABASE_LOCAL;
 

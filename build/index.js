@@ -32,6 +32,14 @@ io.on("connection", (socket) => {
       console.log(data);
       socket.broadcast.emit("message-receive", data);
     });*/
+    socket.on("typing", (type) => {
+        console.log(type);
+        io.emit("typing", type);
+    });
+    socket.on("location", (loc) => {
+        console.log(loc);
+        io.emit("message", loc);
+    });
     socket.on("signin", (id) => {
         console.log(id);
         clients[id] = socket;
@@ -45,4 +53,4 @@ io.on("connection", (socket) => {
     });
 });
 app.use("/chats", imageRoutes_1.default);
-app.use('/uploads1', express_1.default.static('uploads'));
+app.use("/uploads1", express_1.default.static("uploads"));
