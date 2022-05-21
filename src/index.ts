@@ -19,33 +19,37 @@ const connectedUser = new Set();
 io.on("connection", (socket: any) => {
   console.log("connected");
   console.log(socket.id, "has joined");
-  //io.emit('connected-user', connectedUser.size);
+
   connectedUser.add(socket.id);
+  io.emit("connected-user", connectedUser.size);
 
   socket.on("disconnect", () => {
     console.log("disconnected", socket.id);
+    delete clients[socket.id];
     connectedUser.delete(socket.id);
-    //io.emit('connected-user', connectedUser.size);
+    io.emit("connected-user", connectedUser.size);
   });
 
-  /*socket.on("message", (data: any) => {
-    console.log(data);
-    socket.broadcast.emit("message-receive", data);
-  });*/
   socket.on("typing", (type: any) => {
     console.log(type);
     io.emit("typing", type);
+    let targetId = type.targetId;
+    if (clients[targetId]) clients[targetId].emit("typing", type);
   });
   socket.on("location", (loc: any) => {
     console.log(loc);
-    io.emit("message", loc);
+    io.emit("location", loc);
   });
 
   socket.on("signin", (id: any) => {
     console.log(id);
-    clients[id] = socket;
+
+    clients[id] = socket; //allows the socketid to chat with another id
+    clients[socket.id] = id;
+
     console.log(clients);
   });
+
   socket.on("message", (msg: any) => {
     console.log(msg);
     let targetId = msg.targetId;
@@ -55,23 +59,5 @@ io.on("connection", (socket: any) => {
 
 app.use("/chats", imagerouter);
 app.use("/uploads1", express.static("uploads"));
-
-//const DB: any = process.env.DATABASE_LOCAL;
-
-/*mongoose
-  .connect(DB, {
-    useFindAndModify: false,
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => {
-    console.log("DB Connected successfully");
-  })
-  .catch((err) => console.log("error"));*/
-
-/*server.listen(4000, "0.0.0.0", () => {
-  console.log("server started");
-});*/
 
 export { app, httpServer };
